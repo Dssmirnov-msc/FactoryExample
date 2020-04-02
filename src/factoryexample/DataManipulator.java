@@ -16,6 +16,7 @@ public class DataManipulator {
     ArrayList<User> Users;
     ArrayList<Book> Books;
     ArrayList<Record> Records;
+    ArrayList<Journal> Journals;
     
     public DataManipulator() {
     }
@@ -30,5 +31,43 @@ public class DataManipulator {
         UserFactory UF = new UserFactory();
         Users = UF.createUsers(20);
         
+        JournalDataManipulator JDM = new JournalDataManipulator();
+        Journals = JDM.createJournals();
+    }
+
+    private static class JournalDataManipulator {
+
+        public JournalDataManipulator() {
+            
+            
+        }
+        
+         public ArrayList<Journal> createJournals(){
+            ArrayList<Journal> journals = new ArrayList<Journal>();
+            
+            JournalDirector JDirector = new JournalDirector();
+            JDirector.setJB(new PhysicJournalBuilder());
+            journals.addAll(createThematicalJournals(JDirector));
+            
+            JDirector.setJB(new AstronomicalJournalBuilder());
+            journals.addAll(createThematicalJournals(JDirector));
+            return journals;
+
+        }
+         
+        private ArrayList<Journal> createThematicalJournals(JournalDirector JDirector) {
+            ArrayList<Journal> ThematicalJournals = new ArrayList<Journal>(); 
+            
+            while(! JDirector.isJournalsIsOver() ){
+                JDirector.createJournal();
+                ThematicalJournals.add(JDirector.getJournal());
+            }
+
+            return ThematicalJournals;
+
+
+        }
+        
+   
     }
 }
