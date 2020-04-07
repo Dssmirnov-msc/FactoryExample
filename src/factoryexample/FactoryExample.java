@@ -16,6 +16,7 @@ public class FactoryExample {
      */
     public static void main(String[] args) {
         DataManipulator DM = new DataManipulator();
+        DM.initialize();
         DM.generateData();
     }
     

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class DataManipulator {
     
     ArrayList<User> Users;
-    ArrayList<Book> Books;
+    ArrayList<Bookable> Books;
     ArrayList<Record> Records;
     ArrayList<Journal> Journals;
     
@@ -27,12 +27,16 @@ public class DataManipulator {
     }
     
     public void generateData(){
-        
+        /*
         UserFactory UF = new UserFactory();
         Users = UF.createUsers(20);
         
         JournalDataManipulator JDM = new JournalDataManipulator();
         Journals = JDM.createJournals();
+        */
+        
+        BookDataManipulator BDM = new BookDataManipulator();
+        BDM.createTestBook();
     }
 
     private static class JournalDataManipulator {
@@ -70,4 +74,34 @@ public class DataManipulator {
         
    
     }
+
+    private static class BookDataManipulator {
+
+        public BookDataManipulator() {
+            
+            
+            
+        }
+        
+        public void createTestBook(){
+            BookFactory factory;
+            ArrayList<Bookable> BookList = new ArrayList<Bookable>();
+            int i = 0;
+            while(i < 100){
+                int R = i - (int)Math.floor(i/4)*4;
+                switch (R) {
+                    case 0: {factory = new RussianBookFactory(); BookList.add(factory.createFiction());} break;
+                    case 1: {factory = new RussianBookFactory(); BookList.add(factory.createTextbook());} break;
+                    case 2: {factory = new EnglishBookFactory(); BookList.add(factory.createFiction());} break;
+                    case 3: {factory = new EnglishBookFactory(); BookList.add(factory.createTextbook());} break;
+                }    
+                i++;
+            }
+            System.err.println("Генерация завершена");
+        
+        }
+        
+    }
+    
+    
 }
